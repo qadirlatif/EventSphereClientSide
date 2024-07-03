@@ -41,7 +41,7 @@
 <h3>Details</h3>
 <form id="detailform">
     <div class="row">
-        <input type="number" name="SocietyID" value="@Model.detail.SocietyID" hidden />
+        <input type="number" name="SocietyID" value="@Model.society.ID" style="display: none" />
         <div class="col-md-4">
             <label>Supervisor Name</label>
             <input name="SocietySupervisorName" value="@Model.detail.SocietySupervisorName" type="text" class="form-control" />
@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-4">
             <label>President Name</label>
-            <input name="SocietyPresidentName " type="text" value="@Model.detail.SocietyPresidentName" class="form-control" />
+            <input name="SocietyPresidentName" type="text" value="@Model.detail.SocietyPresidentName" class="form-control" />
             <label>President Image (already uploaded => @Model.detail.SocietyPresidentImage)</label>
             <input type="file" name="SocietyPresidentImage" class="form-control" />
         </div>
@@ -67,8 +67,15 @@
             <input name="SocietyFinanceSecreteryImage" type="file" class="form-control" />
         </div>
         <br />
-        <button type="button" class="btn btn-secondary btn-sm">Save Details</button>
+        
+        
+        
 
+    </div><br />
+    <div class="row">
+        <div class="col-md-4">
+            <button id="save" type="button" class="btn btn-secondary">Save Details</button>
+        </div>
     </div>
 </form>
 
@@ -89,8 +96,7 @@
 });
 
     $("#save").click(function () {
-        showLoadingSpinner();
-        var formData = new FormData($('#Documentform')[0]);
+        var formData = new FormData($('#detailform')[0]);
 
         $.ajax({
             url: '/Society/UpdateSocietyDetail',
@@ -99,7 +105,6 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                hideLoadingSpinner();
                 location.reload();
                 //if (data == "Record Saved") {
                 //    hideLoadingSpinner();

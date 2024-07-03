@@ -24,7 +24,12 @@ namespace EventSphere.Services
         private EventServices()
         {
         }
+        public Event GetEvent(int ID)
+        {
+            var context = new DSContext();
+            return context.Events.Where(x => x.ID == ID).FirstOrDefault();
 
+        }
         public List<Event> GetAllEventofSociety(int id)
         {
             var context = new DSContext();

@@ -91,12 +91,24 @@ namespace EventSphere.Controllers
             var details = context.SocietyDetails.Where(x => x.SocietyID == ID).FirstOrDefault();
             var society = context.Societies.Where(x => x.ID == ID).FirstOrDefault();
             SocietyViewModel Model  = new SocietyViewModel();
-            Model.user = new User();
-            Model.detail = new SocietyDetails();
-            Model.society = new Society();
+            
+            
+            
             Model.user = userdetail;
             Model.detail = details;
             Model.society = society;
+            if(Model.user == null)
+            {
+                Model.user = new User();
+            }
+            if (Model.detail == null)
+            {
+                Model.detail = new SocietyDetails();
+            }
+            if (Model.society == null)
+            {
+                Model.society = new Society();
+            }
             return View(Model);
         }
         [HttpPost]
@@ -121,6 +133,81 @@ namespace EventSphere.Controllers
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
-        //public ActionResult AddSociety(society)
+        //API Section
+        [HttpGet]
+        public ActionResult GetAllSociety()
+        {
+            var societies = SocietyServices.Instance.getAllActiveSocieties();
+            return Json(societies, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult SocietyandDetails(int ID)
+        {
+            SocietyDetailAPIVoewModel Model = new SocietyDetailAPIVoewModel();
+            Model.society = SocietyServices.Instance.getAllActiveSocieties().Where(x => x.ID == ID).FirstOrDefault();
+            Model.Detail = SocietyDetailServices.Instance.GetdetailsofASociety(ID);
+            return Json(Model, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult TopSocieties()
+        {
+            var societies = SocietyServices.Instance.getAllActiveSocieties().Take(4).ToList();
+            return Json(societies, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AddEvent(EventAddViewModel model)
+        {
+            try
+            {
+                var Event = new Event();
+                Event.EventName = model.EventName;
+                Event.EventCity = model.EventCity;
+                Event.EventVenue = model.EventVenue;
+                Event.EventDateandTime = model.EventDateandTime;
+                Event.SocietyID = model.SocietyID;
+                if (model.EventIcon != null && model.EventIcon.ContentLength > 0)
+                {
+                    string updatedname = "";
+                    string ImageName = System.IO.Path.GetFileName(model.EventIcon.FileName);
+                    updatedname = DateTime.Now.ToString("ddMMyyyy") + "_" + ImageName;
+                    string physicalPath = Server.MapPath("~/EventIcon/" + updatedname);
+                    model.EventIcon.SaveAs(physicalPath);
+                    Event.EventIcon = updatedname;
+                }
+                EventServices.Instance.SaveEvent(Event);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception x)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public ActionResult GetEventsofSociety(int ID)
+        {
+            var events = EventServices.Instance.GetAllEventofSociety(ID);
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetEventDetail(int ID)
+        {
+            var eventdetail = EventServices.Instance.GetEvent(ID);
+            return Json(eventdetail, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult Login(string email, string password)
+        {
+            var context = new DSContext();
+            var target = context.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+            if(target != null) 
+            {
+                return Json(new { ID = target.SocietyID }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { ID = -1 }, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
     }
 }

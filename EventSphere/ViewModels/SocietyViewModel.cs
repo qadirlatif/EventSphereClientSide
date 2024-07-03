@@ -24,4 +24,19 @@ namespace EventSphere.ViewModels
         public string SocietyFinanceSecreteryName { get; set; }
         public HttpPostedFileBase SocietyFinanceSecreteryImage { get; set; }
     }
+    public class SocietyDetailAPIVoewModel 
+    {
+        public Society society { get; set; }
+        public SocietyDetails Detail { get; set; }
+    }
+    public class EventAddViewModel
+    {
+        public string EventName { get; set; }
+        public DateTime EventDateandTime { get; set; }
+        public string EventVenue { get; set; }
+        public string EventCity { get; set; }
+        public int SocietyID { get; set; }
+        public HttpPostedFileBase EventIcon { get; set; }
+    }
+
 }
