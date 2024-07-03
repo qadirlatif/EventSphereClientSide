@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Permissions;
 
 namespace EventSphere.Database
 {
@@ -22,6 +23,7 @@ namespace EventSphere.Database
         }
 
         public DbSet<Society> Societies { get; set; }
+        public DbSet<SocietyDetails> SocietyDetails { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventReview> EventReviews { get; set; }
 

@@ -4,77 +4,145 @@
     ViewBag.Title = "Log in";
     Layout = null;
 }
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Article Management</title>
-    <!-- base:css -->
-    <link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
-    <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
-    <!-- endinject -->
-    <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Stack admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, stack admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Pleasant Dental | Login</title>
+    <link rel="apple-touch-icon" href="/Content/PleasantDentalData/Logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/PleasantDentalData/Logo.png">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/vendors/css/forms/icheck/icheck.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/vendors/css/forms/icheck/custom.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="/Content/template/app-assets/css/pages/login-register.css">
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/Content/template/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+
 </head>
-<style>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
 
-    .auth .brand-logo img {
-        width: 300px;
+<body class="vertical-layout vertical-menu 1-column   blank-page blank-page" data-open="click" data-menu="vertical-menu" data-col="1-column">
+    <!-- BEGIN: Content-->
+    @if (!string.IsNullOrEmpty(ViewBag.message))
+    {
+        <script type="text/javascript">
+     function showAlert(title, text) {
+         Swal.fire({
+             title: title,
+             text: text,
+             icon: 'error',
+             confirmButtonText: 'OK'
+         });
+     }
+     showAlert("Account","@ViewBag.message");
+        </script>
     }
-    
-</style>
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 m-0">
+                                <div class="card-header border-0">
+                                    <div class="card-title text-center">
+                                        <div class="p-1"><img src="~/Content/PleasantDentalData/Logo.png" style="width: 30%" alt="branding logo"></div>
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                        <span>
+                                            Login with
+                                            Event Sphere
+                                        </span>
+                                    </h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken() <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                <input type="text" name="email" class="form-control form-control-lg" id="user-name" placeholder="Your Username" required>
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-user"></i>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="password" name="password" class="form-control form-control-lg" id="user-password" placeholder="Enter Password" required>
+                                                <div class="form-control-position">
+                                                    <i class="fa fa-key"></i>
+                                                </div>
+                                            </fieldset>
 
-<div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-        <div class="content-wrapper d-flex align-items-center auth px-0">
-            <div class="row w-100 mx-0">
-
-                <div class="col-lg-4 mx-auto">
-                    <div  style=" background-color: dodgerblue; color: white; " class="auth-form-light text-left py-5 px-4 px-sm-5">
-                        <div style="width:300px" class="brand-logo">
-                            <img src="~/Content/template/images/logo.png" />
+                                            @*<div class="form-group row">
+                                                    <div class="col-sm-6 col-12 text-center text-sm-left">
+                                                        <fieldset>
+                                                            <input type="checkbox" id="remember-me" class="chk-remember">
+                                                            <label for="remember-me"> Remember Me</label>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-sm-6 col-12 text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
+                                                </div>*@
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="feather icon-unlock"></i> Login</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="">
+                                        @*<p class="float-sm-left text-center m-0"><a href="recover-password.html" class="card-link">Recover password</a></p>*@
+                                        @*<p class="float-sm-right text-center m-0">New to Pleasant Dental? <a href="~/Account/Register" class="card-link">Sign Up</a></p>*@
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h4>Hello! let's get started</h4>
-                        <h6 class="font-weight-light">Sign in to continue.</h6>
-                        <section id="loginForm">
-                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" placeholder="Username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="password" placeholder="Password">
-                                </div>
-                                <div class="mt-3">
-                                    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
-                                </div>
-
-
-
-                            }
-                        </section>
-                        <a  href="@Url.Action("Register","Account")" class="btn btn-primary"> Register</a>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
-        <!-- content-wrapper ends -->
     </div>
-    <!-- page-body-wrapper ends -->
-</div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="/Content/template/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/Content/template/app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
+    <script src="/Content/template/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/Content/template/app-assets/js/core/app-menu.js"></script>
+    <script src="/Content/template/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="/Content/template/app-assets/js/scripts/forms/form-login-register.js"></script>
+    <!-- END: Page JS-->
 
+</body>
+<!-- END: Body-->
 
-
-<script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- inject:js -->
-<script src="~/Content/template/js/off-canvas.js"></script>
-<script src="~/Content/template/js/hoverable-collapse.js"></script>
-<script src="~/Content/template/js/template.js"></script>
-<script src="~/Content/template/js/settings.js"></script>
-<script src="~/Content/template/js/todolist.js"></script>
+</html>

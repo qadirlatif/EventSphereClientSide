@@ -11,6 +11,7 @@ namespace EventSphere.Entities
 {
     public class User : IdentityUser
     {
+        public int SocietyID { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
