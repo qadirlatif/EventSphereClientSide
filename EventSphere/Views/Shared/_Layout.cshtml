@@ -107,9 +107,31 @@
                 <li class=" nav-item">
                     <a href="~/admin/dashboard"><i class="feather icon-user"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
                 </li>
-                
+                <li>
+                    <hr />
+                </li>
+                <li style="text-align: center">Societies   </li>
+                @{
+                    List<EventSphere.Entities.Society> model = new List<EventSphere.Entities.Society>();
+                    model = (List<EventSphere.Entities.Society>)Session["navitems"];
 
-                @*<a href="#" data-href="@Url.Action("CreateSubSpace", "WorkspaceSubMenu")" class="data-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="feather icon-plus"></i> Create Sub Space</a>*@
+                    if (model != null)
+                    {
+
+                        foreach (var item in model)
+                        {
+                            <li class=" nav-item">
+                                <a href="~/Society/DisplaySocietyInfo?ID=@item.ID"><i class="feather icon-user"></i><span class="menu-title" data-i18n="">@item.SocietyName</span></a>
+                            </li>
+                        }
+                    }
+                }
+                <li class="nav-item" onclick="showmodal()">
+                    <a>
+                        <i class="feather icon-plus"></i> <span class="menu-title" data-i18n="">Create Society</span>
+                    </a>
+                </li>
+                @*<a href="#" data-href="@Url.Action("CreateSociety", "Society")" class="data-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="feather icon-plus"></i> Create Society</a>*@
 
             </ul>
         </div>
@@ -180,7 +202,7 @@
             $("#actionModal").fadeIn();
             $("#actionModal").attr("class", "modal fade show");
             $.ajax({
-                url: "/WorkspaceSubMenu/CreateWorkspaceform",
+                url: "/Society/CreateSociety",
             })
                 .done(function (response) {
                     $("#actionModal .modal-dialog").html(response);

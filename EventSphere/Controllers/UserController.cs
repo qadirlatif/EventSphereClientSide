@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime.Tree;
 
 namespace EventSphere.Controllers
 {
@@ -83,9 +84,10 @@ namespace EventSphere.Controllers
             return users;
         }
 
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model, int ID = 0)
         {
             model.Roles = RolesManager.Roles.ToList();
+            model.SocietyID = ID;
             return PartialView("_Register", model);
         }
 

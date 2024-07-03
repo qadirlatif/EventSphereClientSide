@@ -26,6 +26,7 @@
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
+            <input type="number" value="@Model.SocietyID" name="SocietyID" style="display: none" />
 
             <div class="row">
                 <div class="col-md-12">

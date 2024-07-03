@@ -64,6 +64,7 @@ namespace EventSphere.Controllers
             AdminViewModel model = new AdminViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
             model.SignedInUser = user;
+            Session["navitems"] = SocietyServices.Instance.GetAllSocieties();
             return View(model);
         }
 

@@ -8,6 +8,7 @@ namespace EventSphere.Entities
 {
     public class SocietyDetails : BaseEntity
     {
+        public int  SocietyID { get; set; }
         public string SocietySupervisorName { get; set; }
         public string SocietySupervisorImage { get; set; }
         public string SocietyPresidentName { get; set; }

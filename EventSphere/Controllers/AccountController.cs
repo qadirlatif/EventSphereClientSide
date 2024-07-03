@@ -186,7 +186,7 @@ namespace EventSphere.Controllers
             if (ModelState.IsValid)
             {
                 var role = await RolesManager.FindByIdAsync(model.RoleID);
-                var user = new User { UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password };
+                var user = new User { UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password, SocietyID = model.SocietyID };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

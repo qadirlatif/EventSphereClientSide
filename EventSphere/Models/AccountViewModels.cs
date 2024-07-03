@@ -68,6 +68,7 @@ namespace EventSphere.Models
 
     public class RegisterViewModel
     {
+        public int SocietyID { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

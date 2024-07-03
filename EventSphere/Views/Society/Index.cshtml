@@ -1,0 +1,59 @@
+﻿@model List<EventSphere.Entities.Society>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>All Societies</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Society Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.SocietyName</td>
+                    <td>
+                        @if (item.IsActiveCommunity)
+                        {
+                            <button type="button" class="btn btn-danger btn-sm inactive" id="@item.ID">In Active</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary btn-sm active" id="@item.ID">Active</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(".inactive").click(function () {
+        var id = $(this).attr("id");
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("ChangeStatus", "Society")',
+            data: { status: "Inactive", ID: id },
+            success: function () {
+                location.reload();
+            }
+        })
+    })
+    $(".inactive").click(function () {
+        var id = $(this).attr("id");
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("ChangeStatus", "Society")',
+            data: { status: "active", ID: id },
+            success: function () {
+                location.reload();
+            }
+        })
+    })
+})
+</script>

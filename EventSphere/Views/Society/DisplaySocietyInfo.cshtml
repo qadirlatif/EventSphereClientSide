@@ -1,0 +1,120 @@
+﻿@model EventSphere.ViewModels.SocietyViewModel
+@{
+    ViewBag.Title = "DisplaySocietyInfo";
+}
+<div class="row mb-3">
+    <div class="col col-lg-12">
+        <form>
+            <div class="input-group" style="display: flex; justify-content: space-between">
+                
+                <h3>@Model.society.SocietyName</h3>
+
+
+                <div class="input-group-append">
+                    @*<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index", "User")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>*@
+                    <button data-href="@Url.Action("Register", "User", new {ID = Model.society.ID})" class="data-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i> Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<h4>User</h4>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.user.Name</td>
+                <td>@Model.user.Email</td>
+                <td>@Model.user.PhoneNumber</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3>Details</h3>
+<form id="detailform">
+    <div class="row">
+        <input type="number" name="SocietyID" value="@Model.detail.SocietyID" hidden />
+        <div class="col-md-4">
+            <label>Supervisor Name</label>
+            <input name="SocietySupervisorName" value="@Model.detail.SocietySupervisorName" type="text" class="form-control" />
+            <label>Supervisor Image (already uploaded => @Model.detail.SocietySupervisorImage)</label>
+            <input type="file" name="SocietySupervisorImage" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>President Name</label>
+            <input name="SocietyPresidentName " type="text" value="@Model.detail.SocietyPresidentName" class="form-control" />
+            <label>President Image (already uploaded => @Model.detail.SocietyPresidentImage)</label>
+            <input type="file" name="SocietyPresidentImage" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>Vice President Name</label>
+            <input name="SocietyVicePresidentName" type="text" value="@Model.detail.SocietyVicePresidentName" class="form-control" />
+            <label>Vice President Image (already Uploaded => @Model.detail.SocietyVicePresidentImage)</label>
+            <input type="file" class="form-control" name="SocietyVicePresidentImage" />
+        </div>
+        <div class="col-md-4">
+            <label>Finance Secretary Name</label>
+            <input name="SocietyFinanceSecreteryName" value="@Model.detail.SocietyFinanceSecreteryName" type="text" class="form-control" />
+            <label>Finance Secretary Image (already uploaded => @Model.detail.SocietyFinanceSecreteryImage)</label>
+            <input name="SocietyFinanceSecreteryImage" type="file" class="form-control" />
+        </div>
+        <br />
+        <button type="button" class="btn btn-secondary btn-sm">Save Details</button>
+
+    </div>
+</form>
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
+
+<script>$(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+            data: {ID : '@Model.society.ID'}
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+});
+
+    $("#save").click(function () {
+        showLoadingSpinner();
+        var formData = new FormData($('#Documentform')[0]);
+
+        $.ajax({
+            url: '/Society/UpdateSocietyDetail',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                hideLoadingSpinner();
+                location.reload();
+                //if (data == "Record Saved") {
+                //    hideLoadingSpinner();
+                //    showAlert("General Compliance", data);
+                //}
+                //else {
+                //    hideLoadingSpinner();
+                //    showAlertnoreload("General Compliance", data);
+                //}
+            },
+            error: function (error) {
+                hideLoadingSpinner();
+                //hideLoadingSpinner();
+                //showAlertnoreload("General Compliance", error);
+            }
+        });
+    })
+    </script>
