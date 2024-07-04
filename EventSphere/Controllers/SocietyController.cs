@@ -112,9 +112,22 @@ namespace EventSphere.Controllers
             return View(Model);
         }
         [HttpPost]
-        public ActionResult SaveSociety(Society society)
+        public ActionResult SaveSociety(SocietyAddViewModel newsociety)
         {
+            Society society = new Society();
+            society.SocietyName = newsociety.SocietyName;
+            if(newsociety.SocietyIcon != null && newsociety.SocietyIcon.ContentLength > 0)
+            {
+                string updatedname = "";
+                string ImageName = System.IO.Path.GetFileName(newsociety.SocietyIcon.FileName);
+                updatedname = DateTime.Now.ToString("ddMMyyyy") + "_" + ImageName;
+                string physicalPath = Server.MapPath("~/SocietyDetailsImages/" + updatedname);
+                newsociety.SocietyIcon.SaveAs(physicalPath);
+                society.SocietyIcon = updatedname;
+            }
+
             SocietyServices.Instance.SaveSociety(society);
+
             return Json(new { ID = society.ID }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ChangeStatus(string status, int ID)
@@ -146,9 +159,19 @@ namespace EventSphere.Controllers
             SocietyDetailAPIVoewModel Model = new SocietyDetailAPIVoewModel();
             Model.society = SocietyServices.Instance.getAllActiveSocieties().Where(x => x.ID == ID).FirstOrDefault();
             Model.Detail = SocietyDetailServices.Instance.GetdetailsofASociety(ID);
+            if(Model.Detail == null)
+            {
+                Model.Detail = new SocietyDetails();
+            }
             return Json(Model, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpGet]
+        public ActionResult TopEvents()
+        {
+            var events = EventServices.Instance.GetTopEvents();
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
         public ActionResult TopSocieties()
         {
             var societies = SocietyServices.Instance.getAllActiveSocieties().Take(4).ToList();
@@ -199,9 +222,17 @@ namespace EventSphere.Controllers
         {
             var context = new DSContext();
             var target = context.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+            
             if(target != null) 
             {
-                return Json(new { ID = target.SocietyID }, JsonRequestBehavior.AllowGet);
+                var society = SocietyServices.Instance.getAllActiveSocieties().Where(x => x.ID == target.SocietyID).FirstOrDefault();
+                if (society != null)
+                {
+                    return Json(new { ID = target.SocietyID }, JsonRequestBehavior.AllowGet);
+                }
+                else {
+                    return Json(new { ID = -2 }, JsonRequestBehavior.AllowGet);
+                }
             }
             else
             {

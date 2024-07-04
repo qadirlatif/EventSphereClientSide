@@ -12,6 +12,11 @@ namespace EventSphere.ViewModels
         public SocietyDetails detail { get; set; }
         public Society society { get; set; }
     }
+    public class SocietyAddViewModel
+    {
+        public string SocietyName { get; set; }
+        public HttpPostedFileBase SocietyIcon { get; set; }
+    }
     public class SocietyDetailviewModel
     {
         public int SocietyID { get; set; }

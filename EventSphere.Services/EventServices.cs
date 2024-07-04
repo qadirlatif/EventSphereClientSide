@@ -24,6 +24,7 @@ namespace EventSphere.Services
         private EventServices()
         {
         }
+        
         public Event GetEvent(int ID)
         {
             var context = new DSContext();
@@ -34,6 +35,11 @@ namespace EventSphere.Services
         {
             var context = new DSContext();
             return context.Events.Where(x => x.SocietyID == id).ToList();
+        }
+        public List<Event> GetTopEvents()
+        {
+            var context = new DSContext();
+            return context.Events.OrderByDescending(x=>x.ID).Take(4).ToList();
         }
         //public WorkEvent GetWorkEvent(string id = "")
         //{
